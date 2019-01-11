@@ -24,6 +24,90 @@ class EducationCard extends Component {
         );
     }
 }
+
+class EducationForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = this.defaultState();
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.canSubmit = false;
+    }
+    defaultState() {
+        return {
+            degree: '',
+            school: '',
+            graduated: '',
+            location: ''
+        }
+    }
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
+        this.canSubmit = this.isValidForm();
+    }
+    handleSubmit() {
+        this.props.submissionHandler(this.state);
+        this.setState(this.defaultState());
+    }
+    isValidForm() {
+        return Object.values(this.state).every(x => x.length > 1);
+    }
+    render() {
+        return (
+            <div className="card">
+              <div className="card-content">
+                <div className="field">
+                  <label className="label">Degree</label>
+                  <div className="control">
+                    <input className="input"
+                           type="text"
+                           name="degree"
+                           value={this.state.degree}
+                           onChange={this.handleChange}/>
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">School</label>
+                  <div className="control">
+                    <input className="input"
+                           type="text"
+                           name="school"
+                           value={this.state.school}
+                           onChange={this.handleChange}/>
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Year Graduated</label>
+                  <div className="control">
+                    <input className="input"
+                           type="text"
+                           name="graduated"
+                           value={this.state.graduated}
+                           onChange={this.handleChange}/>
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Location</label>
+                  <div className="control">
+                    <input className="input"
+                           type="text"
+                           name="location"
+                           value={this.state.location}
+                           onChange={this.handleChange}/>
+                  </div>
+                </div>
+              </div>
+              <EducationCard {...this.state}/>
+              <button className="button is-primary is-large"
+                      disabled={!this.canSubmit}
+                      onClick={this.handleSubmit}>
+                Add Education
+              </button>
+            </div>
+        );
+    }
+}
+
 class Education extends Component {
     constructor(props) {
         super(props);
