@@ -130,10 +130,12 @@ class Education extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isEditing: false,
             educationRenderer: EducationCard,
             education: [],
         };
         this.addEducation = this.addEducation.bind(this);
+        this.toggleEditing = this.toggleEditing.bind(this);
     }
 
     addEducation(education) {
@@ -149,13 +151,26 @@ class Education extends Component {
         return this.state.educationRenderer === renderer ? 'is-active' : '';
     }
 
+    toggleEditing() {
+        this.setState({isEditing: !this.state.isEditing});
+    }
+
     render() {
         const EducationRenderer = this.state.educationRenderer;
         return (
-            <div className="panel">
-              <p className="panel-heading">
-                Education
-              </p>
+            <div className="card">
+              <header className="card-header has-background-light">
+                <p className="card-header-title">
+                  Education
+                </p>
+                <div className="card-header-icon">
+                  <button className="button is-light"
+                          onClick={this.toggleEditing}>
+                    {this.state.isEditing ? 'x' : '+'}
+                  </button>
+                </div>
+              </header>
+              
               <div className="tabs is-centered">
                 <ul>
                   <li className={this.rendererButtonClasses(EducationCard)}>
