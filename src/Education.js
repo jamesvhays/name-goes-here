@@ -68,7 +68,6 @@ class EducationField extends Component {
 class EducationForm extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateField = this.updateField.bind(this);
         this.renderEducationField = this.renderEducationField.bind(this);
@@ -87,19 +86,16 @@ class EducationForm extends Component {
             [name]: '',
         }), {});
     }
-    handleChange(event) {
-        this.setState({[event.target.name]: event.target.value});
-        this.canSubmit = this.isValidForm();
-    }
     handleSubmit() {
         this.props.submissionHandler(this.state);
         this.setState(this.defaultState());
     }
     isValidForm() {
-        return Object.values(this.state).every(x => x.length > 1);
+        return this.fields.every(field => this.state[field.name].length > 1);
     }
     updateField({ key, value }) {
         this.setState({[key]: value});
+        this.canSubmit = this.isValidForm();
     }
     renderEducationField(field) {
         return (
