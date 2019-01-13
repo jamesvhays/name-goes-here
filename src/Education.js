@@ -158,6 +158,15 @@ class Education extends Component {
         this.setState({isEditing: !this.state.isEditing});
     }
 
+    renderEducation() {
+        const EducationRenderer = this.state.educationRenderer;
+        return this.state.education.map((x, index) => <EducationRenderer key={index} {...x}/>)
+    }
+
+    renderNoEducation() {
+        return <h1 className="title has-text-grey-lighter">You haven't done anything?</h1>
+    }
+
     render() {
         const EducationRenderer = this.state.educationRenderer;
         return (
@@ -186,7 +195,7 @@ class Education extends Component {
               </div>
 
               <div className="card-content">
-                {this.state.education.map((x, index) => <EducationRenderer key={index} {...x}/>)}
+                {this.state.education.length ? this.renderEducation() : this.renderNoEducation()}
               </div>
 
               {this.state.isEditing && <EducationForm
