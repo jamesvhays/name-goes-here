@@ -110,12 +110,13 @@ class EducationForm extends Component {
     }
 
     render() {
+        const Example = this.props.exampleRenderer;
         return (
             <div className="card">
               <div className="card-content">
                 {this.fields.map(this.educationField)}
               </div>
-              <EducationCard {...this.state}/>
+              <Example {...this.state}/>
               <button className="button is-primary is-large"
                       disabled={!this.canSubmit}
                       onClick={this.handleSubmit}>
