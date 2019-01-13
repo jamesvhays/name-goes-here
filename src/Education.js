@@ -130,6 +130,7 @@ class Education extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            educationRenderer: EducationCard,
             education: [],
         };
         this.addEducation = this.addEducation.bind(this);
@@ -140,16 +141,35 @@ class Education extends Component {
         this.setState({education: joined});
     }
 
+    setEducationRenderer(renderer) {
+        this.setState({educationRenderer: renderer});
+    }
+
+    rendererButtonClasses(renderer) {
+        return this.state.educationRenderer === renderer ? 'is-active' : '';
+    }
+
     render() {
+        const EducationRenderer = this.state.educationRenderer;
         return (
             <div className="panel">
               <p className="panel-heading">
                 Education
               </p>
-              <div className="panel-block">
-                {this.state.education.map((x, index) => <EducationCard key={index} {...x}/>)}
+              <div className="tabs is-centered">
+                <ul>
+                  <li className={this.rendererButtonClasses(EducationCard)}>
+                    <a onClick={() => this.setEducationRenderer(EducationCard)}>Card</a>
+                  </li>
+                  <li className={this.rendererButtonClasses(EducationRow)}>
+                    <a onClick={() => {this.setEducationRenderer(EducationRow)}}>Row</a>
+                  </li>
+                </ul>
               </div>
             <EducationForm submissionHandler={this.addEducation}/>
+              <div className="card-content">
+                {this.state.education.map((x, index) => <EducationRenderer key={index} {...x}/>)}
+              </div>
             </div>
         );
     }
