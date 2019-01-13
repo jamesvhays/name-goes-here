@@ -42,6 +42,29 @@ class EducationRow extends Component {
     }
 }
 
+class EducationField extends Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event) {
+        this.props.onChange({key: this.props.name, value: event.target.value});
+    }
+    render() {
+        return (
+            <div className="field">
+              <label className="label">{this.props.label}</label>
+              <div className="control">
+                <input className="input"
+                       type="text"
+                       value={this.props.value}
+                       onChange={this.handleChange}/>
+              </div>
+            </div>
+        );
+    }
+}
+
 class EducationForm extends Component {
     constructor(props) {
         super(props);
@@ -49,6 +72,12 @@ class EducationForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.canSubmit = false;
+        this.fields = [
+            { name: 'degree', label: 'Degree' },
+            { name: 'school', label: 'School' },
+            { name: 'graduated', label: 'Year Graduated' },
+            { name: 'location', label: 'Location' },
+        ];
     }
     defaultState() {
         return {
@@ -69,50 +98,24 @@ class EducationForm extends Component {
     isValidForm() {
         return Object.values(this.state).every(x => x.length > 1);
     }
+    updateField({ key, value }) {
+        this.setState({[key]: value});
+    }
+    educationField(field) {
+        return (
+            <EducationField
+              key={field.name}
+              value={this.state[field.name]}
+              onChange={this.updateField}
+              {...field} />
+        )
+    }
+
     render() {
         return (
             <div className="card">
               <div className="card-content">
-                <div className="field">
-                  <label className="label">Degree</label>
-                  <div className="control">
-                    <input className="input"
-                           type="text"
-                           name="degree"
-                           value={this.state.degree}
-                           onChange={this.handleChange}/>
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label">School</label>
-                  <div className="control">
-                    <input className="input"
-                           type="text"
-                           name="school"
-                           value={this.state.school}
-                           onChange={this.handleChange}/>
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label">Year Graduated</label>
-                  <div className="control">
-                    <input className="input"
-                           type="text"
-                           name="graduated"
-                           value={this.state.graduated}
-                           onChange={this.handleChange}/>
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label">Location</label>
-                  <div className="control">
-                    <input className="input"
-                           type="text"
-                           name="location"
-                           value={this.state.location}
-                           onChange={this.handleChange}/>
-                  </div>
-                </div>
+                {this.fields.map(this.educationField)}
               </div>
               <EducationCard {...this.state}/>
               <button className="button is-primary is-large"
