@@ -17,6 +17,31 @@ class EducationCard extends Component {
     }
 }
 
+class EducationRow extends Component {
+    render() {
+        return (
+            <div className="level">
+              <div className="level-left">
+                <div className="level-item">
+                  <div className="content">
+                    <p className="title is-3"> {this.props.degree} </p>
+                    <p className="subtitle is-5"> {this.props.school} </p>
+                  </div>
+                </div>
+              </div>
+              <div className="level-right">
+                <div className="level-item">
+                  <div className="content has-text-right">
+                    <p className="title"> {this.props.graduated} </p>
+                    <p className="subtitle"> {this.props.location} </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        );
+    }
+}
+
 class EducationForm extends Component {
     constructor(props) {
         super(props);
