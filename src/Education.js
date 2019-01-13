@@ -68,7 +68,6 @@ class EducationField extends Component {
 class EducationForm extends Component {
     constructor(props) {
         super(props);
-        this.state = this.defaultState();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.canSubmit = false;
@@ -78,14 +77,13 @@ class EducationForm extends Component {
             { name: 'graduated', label: 'Year Graduated' },
             { name: 'location', label: 'Location' },
         ];
+        this.state = this.defaultState();
     }
     defaultState() {
-        return {
-            degree: '',
-            school: '',
-            graduated: '',
-            location: ''
-        }
+        return this.fields.reduce((agg, {name}) => ({
+            ...agg,
+            [name]: '',
+        }), {});
     }
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
