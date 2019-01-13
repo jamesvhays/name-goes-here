@@ -70,6 +70,8 @@ class EducationForm extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateField = this.updateField.bind(this);
+        this.renderEducationField = this.renderEducationField.bind(this);
         this.canSubmit = false;
         this.fields = [
             { name: 'degree', label: 'Degree' },
@@ -99,7 +101,7 @@ class EducationForm extends Component {
     updateField({ key, value }) {
         this.setState({[key]: value});
     }
-    educationField(field) {
+    renderEducationField(field) {
         return (
             <EducationField
               key={field.name}
@@ -114,7 +116,7 @@ class EducationForm extends Component {
         return (
             <div className="card">
               <div className="card-content">
-                {this.fields.map(this.educationField)}
+                {this.fields.map(this.renderEducationField)}
               </div>
               <Example {...this.state}/>
               <button className="button is-primary is-large"
