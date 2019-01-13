@@ -181,10 +181,14 @@ class Education extends Component {
                   </li>
                 </ul>
               </div>
-            <EducationForm submissionHandler={this.addEducation}/>
+
               <div className="card-content">
                 {this.state.education.map((x, index) => <EducationRenderer key={index} {...x}/>)}
               </div>
+
+              {this.state.isEditing && <EducationForm
+                submissionHandler={this.addEducation}
+                exampleRenderer={EducationRenderer}/>}
             </div>
         );
     }
